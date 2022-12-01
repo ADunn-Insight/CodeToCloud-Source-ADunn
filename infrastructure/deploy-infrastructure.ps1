@@ -11,9 +11,10 @@ $location2 = "northeurope"
 az group create -l $location1 -n $resourcegroupName
 
 #create the cosmosDB
-az cosmosdb create --name $cosmosDBName \
---resource-group $resourcegroupName \
---locations regionName=$location1 failoverPriority=0 isZoneRedundant=False \
---locations regionName=$location2 failoverPriority=1 isZoneRedundant=True \
---enable-multiple-write-locations \
---kind MongoDB 
+#az cosmosdb create --name $cosmosDBName `
+#--resource-group $resourcegroupName `
+#--locations regionName=$location1 failoverPriority=0 isZoneRedundant=False `
+#--locations regionName=$location2 failoverPriority=1 isZoneRedundant=True `
+#--enable-multiple-write-locations `
+#--kind MongoDB 
+#commenting out for now while deciding on a backup region
