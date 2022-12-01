@@ -4,8 +4,8 @@ $resourcegroupName = "fabmedical-rg-" + $studentprefix
 $cosmosDBName = "fabmedical-cdb-" + $studentprefix
 $webappName = "fabmedical-web-" + $studentprefix
 $planName = "fabmedical-plan-" + $studentprefix
-$location1 = "eastus2"
-$location2 = "centralus"
+$location1 = "westus3"
+$location2 = "eastus"
 
 #create the rss group
 az group create -l $location1 -n $resourcegroupName
