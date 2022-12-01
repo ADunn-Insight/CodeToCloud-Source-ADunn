@@ -18,3 +18,6 @@ az group create -l $location1 -n $resourcegroupName
 #--enable-multiple-write-locations `
 #--kind MongoDB 
 #commenting out for now while deciding on a backup region
+
+#create the App Service Plan
+az appservice plan create --name $planName --resource-group $resourcegroupName --sku S1 --is-linux
