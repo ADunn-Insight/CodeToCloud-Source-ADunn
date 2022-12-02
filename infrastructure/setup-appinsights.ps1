@@ -1,7 +1,7 @@
 $studentsuffix = "add"
 $resourcegroupName = "fabmedical-rg-" + $studentsuffix
 $location1 = "westus3"
-$appInsights = "fabmedicalai-" + $studentsuffix
+$appInsights = "fabmedical-ai-" + $studentsuffix
 
 az extension add --name application-insights
 $ai = az monitor app-insights component create --app $appInsights --location $location1 --kind web -g $resourcegroupName `
