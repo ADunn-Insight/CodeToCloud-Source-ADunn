@@ -47,3 +47,6 @@ az webapp config container set `
 --multicontainer-config-type COMPOSE `
 --name $webappName `
 --resource-group $resourcegroupName 
+
+#populate the db
+docker run -ti -e MONGODB_CONNECTION=$dbConnection ghcr.io/adunn-insight/fabrikam-init
