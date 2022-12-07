@@ -35,8 +35,7 @@ $dbConnection = $manipulate[0] + "contentdb?" + $manipulate[1]
 
 #create the WebApp with nginx
 az webapp create --resource-group $resourcegroupName `
---plan $planName --name $webappName -i nginx `
---settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true MONGODB_CONNECTION=$dbConnection
+--plan $planName --name $webappName -i nginx
 
 #configure the webapp settings
 az webapp config container set `
@@ -46,7 +45,13 @@ az webapp config container set `
 --multicontainer-config-file docker-compose.yml `
 --multicontainer-config-type COMPOSE `
 --name $webappName `
---resource-group $resourcegroupName 
+--resource-group $resourcegroupName `
+--enable-app-service-storage true
+
+#set the mongoDB connection
+az webapp config appsettings set --resource-group $resourceGroupName `
+--name $webappName `
+--settings MONGODB_CONNECTION=$dbConnection
 
 #populate the db
 docker run -ti -e MONGODB_CONNECTION=$dbConnection ghcr.io/adunn-insight/fabrikam-init
