@@ -20,7 +20,7 @@ az cosmosdb create --name $cosmosDBName `
 --locations regionName=$location2 failoverPriority=1 isZoneRedundant=True `
 --enable-multiple-write-locations `
 --kind MongoDB `
---server-version 4.0 `
+--server-version 4.0
 
 #create the App Service Plan
 az appservice plan create --name $planName --resource-group $resourcegroupName --sku S1 --is-linux
