@@ -6,7 +6,7 @@ const request = require('request');
 const app = express();
 
 const appInsights = require("applicationinsights");
-appInsights.setup();
+appInsights.setup("texttoreplace");
 appInsights.start();
 
 app.use(express.static(path.join(__dirname, 'dist/content-web')));
