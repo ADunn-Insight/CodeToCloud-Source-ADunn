@@ -2,7 +2,7 @@
 & .\deploy-infrastructure.ps1
 & .\setup-appinsights.ps1
 $insertString = "appInsights.setup(" + $aiInstKey + ");"
-(Get-Content ../content-web/app.js) -Replace "appInsights\.setup\(\`"\S+\`"\);", $insertString | Set-Content ../content-web/app.js
+(Get-Content ../content-web/app.js) -Replace "appInsights\.setup\(\`"\S*\`"\);", $insertString | Set-Content ../content-web/app.js
 git add ../content-web/app.js
 git commit -m "added new aiInstKey to app.js"
 git push
