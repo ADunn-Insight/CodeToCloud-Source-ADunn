@@ -1,7 +1,5 @@
-$studentsuffix = "add"
-$resourcegroupName = "fabmedical-rg-" + $studentsuffix
+#setup variables fo use within this script
 $workspaceName = "fabmedical-law-"  + $studentsuffix
-$location1 = "westus3"
 $appInsights = "fabmedical-ai-" + $studentsuffix
 
 az monitor log-analytics workspace create --resource-group $resourcegroupName `
