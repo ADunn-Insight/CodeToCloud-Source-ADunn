@@ -3,6 +3,7 @@ $resourcegroupName = "fabmedical-rg-" + $studentsuffix
 $workspaceName = "fabmedical-law-"  + $studentsuffix
 $location1 = "westus3"
 $appInsights = "fabmedical-ai-" + $studentsuffix
+$webappName = "fabmedical-web-" + $studentprefix
 
 az monitor log-analytics workspace create --resource-group $resourcegroupName `
     --workspace-name $workspaceName
