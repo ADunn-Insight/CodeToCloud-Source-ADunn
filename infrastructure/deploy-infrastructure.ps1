@@ -26,7 +26,7 @@ az cosmosdb create --name $cosmosDBName `
 az appservice plan create --name $planName --resource-group $resourcegroupName --sku S1 --is-linux
 
 #get and configure dbConnection string
-$dbKeys = az cosmosdb keys list -n fabmedical-cdb-add -g fabmedical-rg-add --type connection-strings `
+$dbKeys = az cosmosdb keys list -n $cosmosDBName -g $resourcegroupName --type connection-strings `
     --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
 $manipulate = $dbKeys[1]
 $manipulate = $manipulate.Split("""")[1]
