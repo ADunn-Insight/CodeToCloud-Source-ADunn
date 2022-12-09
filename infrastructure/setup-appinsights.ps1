@@ -21,7 +21,7 @@ az webapp config appsettings set --resource-group $resourceGroupName `
 --settings APPINSIGHTS_INSTRUMENTATIONKEY=$global:aiInstKey `
     APPINSIGHTS_PROFILERFEATURE_VERSION=1.0.0 `
     APPINSIGHTS_SNAPSHOTFEATURE_VERSION=1.0.0 `
-    APPLICATIONINSIGHTS_CONNECTION_STRING=$ai.ConnectionString `
+    APPLICATIONINSIGHTS_CONNECTION_STRING=$ai.connectionString `
     ApplicationInsightsAgent_EXTENSION_VERSION=~2 `
     DiagnosticServices_EXTENSION_VERSION=~3 `
     InstrumentationEngine_EXTENSION_VERSION=disabled `
