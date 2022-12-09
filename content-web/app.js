@@ -6,7 +6,7 @@ const request = require('request');
 const app = express();
 
 const appInsights = require("applicationinsights");
-appInsights.setup("e074a9e3-853a-4501-b404-576799b48062");
+appInsights.setup("be3bc1d2-0896-42fe-9808-73dc1aa77c48");
 appInsights.start();
 
 app.use(express.static(path.join(__dirname, 'dist/content-web')));
