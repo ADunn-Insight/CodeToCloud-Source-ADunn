@@ -1,4 +1,4 @@
-#setup variables fo use within this script
+#setup variables to use within this script
 $workspaceName = "fabmedical-law-"  + $studentsuffix
 $appInsights = "fabmedical-ai-" + $studentsuffix
 
