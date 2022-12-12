@@ -1,6 +1,6 @@
 #setup variables fo use within this script
-$cosmosDBName = "fabmedical-cdb-" + $studentprefix
-$planName = "fabmedical-plan-" + $studentprefix
+$cosmosDBName = "fabmedical-cdb-" + $studentsuffix
+$planName = "fabmedical-plan-" + $studentsuffix
 $location2 = "eastus"
 $dbConnection = ""
 $manipulate = ""
