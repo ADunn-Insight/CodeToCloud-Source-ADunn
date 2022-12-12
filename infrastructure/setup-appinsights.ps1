@@ -1,6 +1,7 @@
 #setup variables to use within this script
 $workspaceName = "fabmedical-law-"  + $studentsuffix
 $appInsights = "fabmedical-ai-" + $studentsuffix
+$webappName = "fabmedical-web-" + $studentsuffix
 
 az monitor log-analytics workspace create --resource-group $resourcegroupName `
     --workspace-name $workspaceName
@@ -11,6 +12,7 @@ $ai = az monitor app-insights component create --app $appInsights --location $lo
     --application-type web | ConvertFrom-Json
 
 $global:aiInstKey = $ai.instrumentationKey
+$aiConnectionString = $ai.connectionString
 
 #link the newly created app insights to the webapp with default values
 az webapp config appsettings set --resource-group $resourceGroupName `
@@ -18,7 +20,7 @@ az webapp config appsettings set --resource-group $resourceGroupName `
 --settings APPINSIGHTS_INSTRUMENTATIONKEY=$global:aiInstKey `
     APPINSIGHTS_PROFILERFEATURE_VERSION=1.0.0 `
     APPINSIGHTS_SNAPSHOTFEATURE_VERSION=1.0.0 `
-    APPLICATIONINSIGHTS_CONNECTION_STRING=$ai.ConnectionString `
+    APPLICATIONINSIGHTS_CONNECTION_STRING=$aiConnectionString `
     ApplicationInsightsAgent_EXTENSION_VERSION=~2 `
     DiagnosticServices_EXTENSION_VERSION=~3 `
     InstrumentationEngine_EXTENSION_VERSION=disabled `
