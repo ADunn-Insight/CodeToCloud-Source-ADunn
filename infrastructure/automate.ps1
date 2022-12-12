@@ -13,13 +13,13 @@ Create the following:
 Configure the webapp settings
 Populate the database
 #>
-& .\deploy-infrastructure.ps1
+& .\${GITHUB_WORKSPACE}\infrastructure\deploy-infrastructure.ps1
 <#
 Create the following:
 - log analytics workspace: fabmedical-law-add
 - app insights: fabmedical-ai-add
 #>
-& .\setup-appinsights.ps1
+& .\${GITHUB_WORKSPACE}\infrastructure\setup-appinsights.ps1
 
 #configure the app insights instrumentation key and insert it into app.js
 $insertString = "appInsights.setup(`"" + $aiInstKey + "`");"
@@ -33,4 +33,4 @@ git push
 Start-Sleep -Seconds 300
 
 #re-deploy the web container to the application
-& .\deploy-container.ps1
+& .\${GITHUB_WORKSPACE}\infrastructure\deploy-container.ps1
