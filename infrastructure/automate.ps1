@@ -1,8 +1,8 @@
 #fully automate the creation and deployment of azure resources with one script
 #define varaibles that can be used in all child scripts
-$script:studentprefix = "add"
-$script:resourcegroupName = "fabmedical-rg-" + $studentprefix
-$script:webappName = "fabmedical-web-" + $studentprefix
+$script:studentsuffix = "add"
+$script:resourcegroupName = "fabmedical-rg-" + $studentsuffix
+$script:webappName = "fabmedical-web-" + $studentsuffix
 $script:location1 = "westus3"
 <#
 Create the following:
