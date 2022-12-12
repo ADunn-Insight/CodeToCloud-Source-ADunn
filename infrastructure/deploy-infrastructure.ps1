@@ -1,10 +1,6 @@
-#setup variables
-$studentsuffix = "add"
-$resourcegroupName = "fabmedical-rg-" + $studentsuffix
+#setup variables to use within this script
 $cosmosDBName = "fabmedical-cdb-" + $studentsuffix
-$webappName = "fabmedical-web-" + $studentsuffix
 $planName = "fabmedical-plan-" + $studentsuffix
-$location1 = "westus3"
 $location2 = "eastus"
 $dbConnection = ""
 $manipulate = ""

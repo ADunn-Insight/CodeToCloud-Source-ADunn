@@ -1,7 +1,5 @@
-$studentsuffix = "add"
-$resourcegroupName = "fabmedical-rg-" + $studentsuffix
-$workspaceName = "fabmedical-law-" + $studentsuffix
-$location1 = "westus3"
+#setup variables to use within this script
+$workspaceName = "fabmedical-law-"  + $studentsuffix
 $appInsights = "fabmedical-ai-" + $studentsuffix
 $webappName = "fabmedical-web-" + $studentsuffix
 
