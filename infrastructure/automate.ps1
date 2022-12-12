@@ -23,7 +23,7 @@ Create the following:
 
 #configure the app insights instrumentation key and insert it into app.js
 $insertString = "appInsights.setup(`"" + $aiInstKey + "`");"
-(Get-Content ../content-web/app.js) -Replace "appInsights\.setup\(\`"*\S*\`"*\);", $insertString | Set-Content ../content-web/app.js
+(Get-Content ${GITHUB_WORKSPACE}/content-web/app.js) -Replace "appInsights\.setup\(\`"*\S*\`"*\);", $insertString | Set-Content ${GITHUB_WORKSPACE}/content-web/app.js
 
 #commit the updated app.js
 git add ../content-web/app.js
