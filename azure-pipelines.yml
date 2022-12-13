@@ -28,3 +28,20 @@ stages:
             additionalImageTags: '$(Build.BuildNumber)'
   - stage: DeployProd
     dependsOn: build
+    jobs:
+    - deployment: infrastructure
+      environment: production
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - checkout: self
+              - task: AzureCLI@2
+                inputs:
+                  azureSubscription: 'Fabrikam-Azure'
+                  scriptType: 'pscore'
+                  scriptLocation: 'scriptPath'
+                  scriptPath: './infrastructure/automate.ps1'
+                  arguments: 'add'
+                env:
+                  CR_PAT: $(CR_PAT)
