@@ -41,7 +41,9 @@ stages:
                   azureSubscription: 'Fabrikam-Azure'
                   scriptType: 'pscore'
                   scriptLocation: 'scriptPath'
-                  scriptPath: './infrastructure/automate.ps1'
+                  scriptPath: './automate.ps1'
                   arguments: 'add'
+                  workingDirectory: infrastrucutre
                 env:
                   CR_PAT: $(CR_PAT)
+                    
