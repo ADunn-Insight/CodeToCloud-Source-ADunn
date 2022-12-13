@@ -4,6 +4,11 @@ $script:studentsuffix = "add"
 $script:resourcegroupName = "fabmedical-rg-" + $studentsuffix
 $script:webappName = "fabmedical-web-" + $studentsuffix
 $script:location1 = "westus3"
+
+#login to github
+git config --global user.email="alec.dunn@insight.com"
+git config --global user.name="Alec Dunn"
+
 <#
 Create the following:
 - resource group: fabmedical-rg-add
