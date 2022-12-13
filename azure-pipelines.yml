@@ -38,12 +38,12 @@ stages:
               - checkout: self
               - task: AzureCLI@2
                 inputs:
+                  workingDirectory: infrastructure
                   azureSubscription: 'Fabrikam-Azure'
                   scriptType: 'pscore'
                   scriptLocation: 'scriptPath'
-                  scriptPath: './automate.ps1'
+                  scriptPath: './infrastructure/automate.ps1'
                   arguments: 'add'
-                  workingDirectory: infrastructure
                 env:
                   CR_PAT: $(CR_PAT)
                     
