@@ -4,6 +4,7 @@ $script:studentsuffix = "add"
 $script:resourcegroupName = "fabmedical-rg-" + $studentsuffix
 $script:webappName = "fabmedical-web-" + $studentsuffix
 $script:location1 = "westus3"
+$MY_PAT = $CR_PAT
 
 #login to github
 git config --global user.email="alec.dunn@insight.com"
