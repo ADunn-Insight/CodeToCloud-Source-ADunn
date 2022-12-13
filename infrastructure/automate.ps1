@@ -7,8 +7,8 @@ $script:location1 = "westus3"
 $script:MY_PAT = $CR_PAT
 
 #login to github
-git config --global user.email="alec.dunn@insight.com"
-git config --global user.name="Alec Dunn"
+git config --global user.email "alec.dunn@insight.com"
+git config --global user.name "Alec Dunn"
 
 <#
 Create the following:
