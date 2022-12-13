@@ -1,5 +1,11 @@
 trigger:
-- main
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - content-web/app.js
+
 
 pool:
   vmImage: ubuntu-latest
