@@ -61,7 +61,7 @@ stages:
             azurePowerShellVersion: 'LatestVersion'
             scriptType: 'InlineScript'
             Inline: |
-              Write-Host "hello world"
+              az login
               $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
                 --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
               $manipulate = $dbKeys
