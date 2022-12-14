@@ -61,7 +61,7 @@ stages:
             scriptType: 'InlineScript'
             Inline: |
               $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
-                --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"'
+                --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
               $manipulate = $dbKeys
               $manipulate = $manipulate.Split("""")[1]
               $manipulate = $manipulate.Split("?")
