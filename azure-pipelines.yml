@@ -67,12 +67,15 @@ stages:
       variables:
         dbConnection: $[ dependencies.getConnectionString.outputs['connectionString'] ]
         steps:
-        - powershell: |
-            $manipulate = $dbConnection
-            $manipulate = $manipulate.Split("""")[1]
-            $manipulate = $manipulate.Split("?")
-            $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
-            ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString
+          - task: Powershell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+                $manipulate = $dbConnection
+                $manipulate = $manipulate.Split("""")[1]
+                $manipulate = $manipulate.Split("?")
+                $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
+                ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString
     - job: 'dockerPopulateDB'
       dependsOn: 'manipulateString'
       variables:
