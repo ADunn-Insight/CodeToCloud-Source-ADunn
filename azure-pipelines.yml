@@ -12,7 +12,7 @@ pool:
 stages:
   - stage: build
     jobs:
-    - job: 'BuildAndpublish'
+    - job: 'BuildAndPublish'
       displayName: 'Build and Publish'
       steps:
         - checkout: self
@@ -51,4 +51,25 @@ stages:
                   scriptPath: './infrastructure/automate.ps1'
                 env:
                   CR_PAT: $(CR_PAT)
-                    
+  - stage: PopulateDB
+    dependsOn: DeployProd
+    jobs:
+    - job: 'getConnectionString'
+      steps:
+        - powershell: |
+            $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings --query "connectionStrings[?description=="Primary MongoDB Connection String"].connectionString"    - job: 'configureString'
+            $manipulate = $dbKeys 
+            $manipulate = $manipulate.Split("""")[1] 
+            $manipulate = $manipulate.Split("?")
+            $dbConnection = $manipulate[0] + "contentdb?" + $manipulate[1]
+            ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$dbConnection
+    - job: 'dockerPopulateDB'
+      dependsOn: 'getConnectionString'
+      variables:
+        mongoConnection: $[ dependencies.getConnectionString.ouputs['mongoDBConnection'] ]
+      steps:
+        - task: Docker@0
+          inputs:
+            containerregistrytype: 'Azure Container Registry'
+            action: Run a Docker command
+            customCommand: docker run -ti -e MONGODB_CONNECTION=$mongoConnection ghcr.io/adunn-insight/fabrikam-init
