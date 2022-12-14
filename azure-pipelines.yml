@@ -62,17 +62,21 @@ stages:
             scriptLocation: inlineScript
             inlineScript: |
               ##vso[task.setvariable variable=connectionString;isOutput=true]az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"'
-              echo "$connectionString"
-        - powershell: |
-            $manipulate = $connectionString
-            $manipulate = $manipulate.Split("""")[1]
-            $manipulate = $manipulate.Split("?")
-            $dbConnection = $manipulate[0] + "contentdb?" + $manipulate[1]
-            ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$dbConnection
-    - job: 'dockerPopulateDB'
+    - job: 'manipulateString'
       dependsOn: 'getConnectionString'
       variables:
-        mongoConnection: $[ dependencies.getConnectionString.ouputs['mongoDBConnection'] ]
+        dbConnection: $[ dependencies.getConnectionString.outputs['connectionString'] ]
+        steps:
+        - powershell: |
+            $manipulate = $dbConnection
+            $manipulate = $manipulate.Split("""")[1]
+            $manipulate = $manipulate.Split("?")
+            $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
+            ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString
+    - job: 'dockerPopulateDB'
+      dependsOn: 'manipulateString'
+      variables:
+        mongoConnection: $[ dependencies.manipulateString.ouputs['mongoDBConnection'] ]
       steps:
         - task: Docker@0
           inputs:
