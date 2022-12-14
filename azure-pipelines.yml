@@ -60,8 +60,8 @@ stages:
             azureSubscription: 'Fabrikam-Azure'
             scriptType: 'pscore'
             scriptLocation: inlineScript
-            inlineScript: 
-              ##vso[task.setvariable variable=connectionString]az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString" |                     
+            inlineScript: |
+              ##vso[task.setvariable variable=connectionString]az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"'
         - powershell: |
             $manipulate = $connectionString 
             $manipulate = $manipulate.Split("""")[1]
