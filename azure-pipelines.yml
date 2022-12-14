@@ -49,7 +49,6 @@ stages:
                   scriptType: 'pscore'
                   scriptLocation: 'scriptPath'
                   scriptPath: './infrastructure/automate.ps1'
-                  arguments: 'add'
                 env:
-                  CR_PAT: $(CR_PAT)
+                  CR_PAT: $(env:CR_PAT)
                     
