@@ -58,7 +58,7 @@ stages:
         - task: AzurePowerShell@5
           inputs:
             azureSubscription: 'Fabrikam-Azure'
-            preferredAzurePowerShellVersion: 'System.Version'
+            azurePowerShellVersion: 'LatestVersion'
             scriptType: 'InlineScript'
             Inline: |
               Write-Host "hello world"
