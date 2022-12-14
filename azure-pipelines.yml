@@ -62,10 +62,11 @@ stages:
             scriptLocation: inlineScript
             inlineScript: |
               ##vso[task.setvariable variable=connectionString;isOutput=true]az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"'
+          name: testing
     - job: 'manipulateString'
       dependsOn: 'getConnectionString'
       variables:
-        dbConnection: $[ dependencies.getConnectionString.outputs['connectionString'] ]
+        dbConnection: $[ dependencies.getConnectionString.outputs['testing.connectionString'] ]
       steps:
         - task: Powershell@2
           inputs:
