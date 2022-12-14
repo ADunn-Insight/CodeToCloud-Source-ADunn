@@ -55,32 +55,22 @@ stages:
     jobs:
     - job: 'getConnectionString'
       steps:
-        - task: AzureCLI@2
+        - task: AzurePowerShell@5
           inputs:
             azureSubscription: 'Fabrikam-Azure'
-            scriptType: 'pscore'
-            scriptLocation: inlineScript
-            inlineScript: |
-              ##vso[task.setvariable variable=connectionString;isOutput=true]az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"'
-          name: testing
-    - job: 'manipulateString'
-      dependsOn: 'getConnectionString'
-      variables:
-        dbConnection: $[ dependencies.getConnectionString.outputs['testing.connectionString'] ]
-      steps:
-        - task: Powershell@2
-          inputs:
-            targetType: 'inline'
-            script: |
-              $manipulate = $dbConnection
+            scriptType: 'InlineScript'
+            Inline: |
+              $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
+                --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"'
+              $manipulate = $dbKeys
               $manipulate = $manipulate.Split("""")[1]
               $manipulate = $manipulate.Split("?")
               $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
-              ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString
+              ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString              
     - job: 'dockerPopulateDB'
-      dependsOn: 'manipulateString'
+      dependsOn: 'getConnectionString'
       variables:
-        mongoConnection: $[ dependencies.manipulateString.ouputs['mongoDBConnection'] ]
+        mongoConnection: $[ dependencies.getConnectionString.ouputs['mongoDBConnection'] ]
       steps:
         - task: Docker@0
           inputs:
