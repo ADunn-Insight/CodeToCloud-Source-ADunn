@@ -6,7 +6,6 @@ trigger:
     exclude:
       - content-web/app.js
 
-
 pool:
   vmImage: ubuntu-latest
 stages:
