@@ -62,7 +62,7 @@ stages:
             scriptLocation: inlineScript
             inlineScript: |
               ##vso[task.setvariable variable=connectionString;isOutput=true]az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"'
-              echo $connectionString              
+              echo "$connectionString"
         - powershell: |
             $manipulate = $connectionString
             $manipulate = $manipulate.Split("""")[1]
