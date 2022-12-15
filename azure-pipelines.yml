@@ -78,4 +78,4 @@ stages:
             containerRegistry: 'GitHub Container Registry'
             command: login
         - script: |
-            docker run -ti -e MONGODB_CONNECTION=$mongoDBConnection ghcr.io/adunn-insight/fabrikam-init
+            docker run -e MONGODB_CONNECTION=$mongoDBConnection ghcr.io/adunn-insight/fabrikam-init
