@@ -73,8 +73,9 @@ stages:
       variables:
         mongoConnection: $[ dependencies.getConnectionString.ouputs['mongoDBConnection'] ]
       steps:
-        - task: Docker@0
+        - task: Docker@2
           inputs:
-            containerregistrytype: 'Azure Container Registry'
-            action: Run a Docker command
-            customCommand: docker run -e MONGODB_CONNECTION=$mongoConnection ghcr.io/adunn-insight/fabrikam-init
+            containerRegistry: 'GitHub Container Registry'
+            command: login
+        - script: |
+            docker run -ti -e MONGODB_CONNECTION=$mongoConnection ghcr.io/adunn-insight/fabrikam-init
