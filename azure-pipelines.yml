@@ -79,7 +79,7 @@ stages:
       steps:
         - powershell: |
             Write-Host "##vso[task.setvariable variable=finalConnection;isOutput=true]$(mongoConnection)"
-            Write-Host "testing before moving on to next step: $(finalConnection)""
+            Write-Host "testing before moving on to next step - $(finalConnection)"
           name: makeLocal
         - task: Docker@2
           inputs:
