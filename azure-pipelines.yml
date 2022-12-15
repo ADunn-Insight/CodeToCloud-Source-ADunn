@@ -64,14 +64,10 @@ stages:
               $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
                 --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
               $manipulate = $dbKeys
-              Write-Host "after initial grab " + $manipulate
-              $manipulate = $manipulate.Split("""")[1]
-              Write-Host "after first split on quote marks " + $manipulate
+              $manipulate = $manipulate.Split("""")[2]
               $manipulate = $manipulate.Split("?")
-              Write-Host $manipulate
               $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
               ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString
-              Write-Host $databaseString
     - job: 'dockerPopulateDB'
       dependsOn: 'getConnectionString'
       variables:
@@ -82,5 +78,4 @@ stages:
             containerRegistry: 'GitHub Container Registry'
             command: login
         - script: |
-            Write-Host $mongoConnection
             docker run -e MONGODB_CONNECTION=$mongoConnection ghcr.io/adunn-insight/fabrikam-init
