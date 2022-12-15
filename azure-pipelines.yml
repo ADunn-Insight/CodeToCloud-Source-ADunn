@@ -55,12 +55,12 @@ stages:
     jobs:
     - job: 'getConnectionString'
       steps:
-        - task: AzurePowerShell@5
+        - task: AzureCLI@2
           inputs:
             azureSubscription: 'Fabrikam-Azure'
-            azurePowerShellVersion: 'LatestVersion'
-            scriptType: 'InlineScript'
-            Inline: |
+            scriptLocation: 'inlineScript'
+            scriptType: pscore
+            inlineScript: |
               $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
                 --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
               $manipulate = $dbKeys
