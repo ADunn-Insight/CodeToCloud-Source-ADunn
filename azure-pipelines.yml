@@ -60,6 +60,7 @@ stages:
             azureSubscription: 'Fabrikam-Azure'
             azurePowerShellVersion: 'LatestVersion'
             scriptType: 'InlineScript'
+            pwsh: true
             Inline: |
               $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
                 --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
