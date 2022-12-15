@@ -68,6 +68,8 @@ stages:
               $manipulate = $manipulate.Split("?")
               $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
               Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString"
+              Write-Host "databasestring" $databaseString
+              Write-Host "mongoconnection" $mongoDBConnection
           name: getString
     - job: 'dockerPopulateDB'
       dependsOn: 'getConnectionString'
