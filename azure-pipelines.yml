@@ -79,8 +79,9 @@ stages:
       steps:
         - powershell: |
             Write-Host "##vso[task.setvariable variable=finalConnection;isOutput=true]$(mongoConnection)"
-            Write-Host "testing before moving on to next step - $(makeLocal.finalConnection)"
           name: makeLocal
+        - powershell: |
+            Write-Host "testing before moving on to next step - $(makeLocal.finalConnection)"
         - task: Docker@2
           inputs:
             containerRegistry: 'GitHub Container Registry'
