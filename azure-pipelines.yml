@@ -6,13 +6,12 @@ trigger:
     exclude:
       - content-web/app.js
 
-
 pool:
   vmImage: ubuntu-latest
 stages:
   - stage: build
     jobs:
-    - job: 'BuildAndpublish'
+    - job: 'BuildAndPublish'
       displayName: 'Build and Publish'
       steps:
         - checkout: self
@@ -36,7 +35,7 @@ stages:
     dependsOn: build
     jobs:
     - deployment: infrastructure
-      environment: production
+      environment: production 
       strategy:
         runOnce:
           deploy:
@@ -49,7 +48,41 @@ stages:
                   scriptType: 'pscore'
                   scriptLocation: 'scriptPath'
                   scriptPath: './infrastructure/automate.ps1'
-                  arguments: 'add'
                 env:
                   CR_PAT: $(CR_PAT)
-                    
+  - stage: PopulateDB
+    dependsOn: DeployProd
+    jobs:
+    - job: 'getConnectionString'
+      steps:
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: 'Fabrikam-Azure'
+            scriptLocation: 'inlineScript'
+            scriptType: pscore
+            inlineScript: |
+              $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
+                --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
+              $manipulate = $dbKeys
+              $manipulate = $manipulate.Split("""")[2]
+              $manipulate = $manipulate.Split("?")
+              $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
+              Write-Host "##vso[task.setvariable variable=dbString;isOutput=true]$databaseString"
+          name: configureString
+        - powershell: |
+            Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$(configureString.dbString)"
+          name: outputString
+    - job: 'dockerPopulateDB'
+      dependsOn: 'getConnectionString'
+      variables:
+        mongoConnection: $[ dependencies.getConnectionString.outputs['outputString.mongoDBConnection'] ]
+      steps:
+        - powershell: |
+            Write-Host "##vso[task.setvariable variable=finalConnection;isOutput=true]$(mongoConnection)"
+          name: makeLocal
+        - task: Docker@2
+          inputs:
+            containerRegistry: 'GitHub Container Registry'
+            command: login
+        - script: |
+            docker run -e MONGODB_CONNECTION="$(makeLocal.finalConnection)" ghcr.io/adunn-insight/fabrikam-init
