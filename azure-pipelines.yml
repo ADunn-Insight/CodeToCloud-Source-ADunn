@@ -71,6 +71,9 @@ stages:
               Write-Host "databasestring" $databaseString
               Write-Host "mongoconnection" $mongoDBConnection
           name: getString
+        - powershell: |
+            Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]literally anything else"
+            Write-Host $(mongoDBConnection)
     - job: 'dockerPopulateDB'
       dependsOn: 'getConnectionString'
       variables:
