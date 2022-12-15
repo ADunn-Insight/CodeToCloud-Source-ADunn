@@ -35,7 +35,7 @@ stages:
     dependsOn: build
     jobs:
     - deployment: infrastructure
-      environment: production
+      environment: production 
       strategy:
         runOnce:
           deploy:
@@ -80,8 +80,6 @@ stages:
         - powershell: |
             Write-Host "##vso[task.setvariable variable=finalConnection;isOutput=true]$(mongoConnection)"
           name: makeLocal
-        - powershell: |
-            Write-Host "testing before moving on to next step - $(makeLocal.finalConnection)"
         - task: Docker@2
           inputs:
             containerRegistry: 'GitHub Container Registry'
