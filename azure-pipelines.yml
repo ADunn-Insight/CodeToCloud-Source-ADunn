@@ -77,7 +77,7 @@ stages:
     - job: 'dockerPopulateDB'
       dependsOn: 'getConnectionString'
       variables:
-        mongoConnection: $[ dependencies.getConnectionString.outputs['getString.mongoDBConnection'] ]
+        mongoConnection: $[ dependencies.getConnectionString.outputs['testing.mongoDBConnection'] ]
       steps:
         - task: Docker@2
           inputs:
