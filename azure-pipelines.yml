@@ -87,5 +87,4 @@ stages:
             containerRegistry: 'GitHub Container Registry'
             command: login
         - script: |
-            echo "mongo connection string $(makeLocal.finalConnection)"
-            docker run -e MONGODB_CONNECTION=$(makeLocal.finalConnection) ghcr.io/adunn-insight/fabrikam-init
+            docker run -e MONGODB_CONNECTION="$(makeLocal.finalConnection)" ghcr.io/adunn-insight/fabrikam-init
