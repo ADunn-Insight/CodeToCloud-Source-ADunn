@@ -67,12 +67,10 @@ stages:
               $manipulate = $manipulate.Split("""")[2]
               $manipulate = $manipulate.Split("?")
               $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
-              Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]literally anything else"
-              Write-Host "databasestring" $databaseString
-              Write-Host "mongoconnection" $mongoDBConnection
+              Write-Host "##vso[task.setvariable variable=dbString;isOutput=true]$databaseString"
           name: getString
         - powershell: |
-            Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]literally anything else"
+            Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$(getString.dbString)"
           name: testing
         - powershell: |
             Write-Host $(testing.mongoDBConnection)
