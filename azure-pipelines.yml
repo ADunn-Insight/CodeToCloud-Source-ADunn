@@ -64,9 +64,9 @@ stages:
               $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
                 --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
               $manipulate = $dbKeys
-              Write-Host $manipulate
+              Write-Host "after initial grab " + $manipulate
               $manipulate = $manipulate.Split("""")[1]
-              Write-Host $manipulate
+              Write-Host "after first split on quote marks " + $manipulate
               $manipulate = $manipulate.Split("?")
               Write-Host $manipulate
               $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
