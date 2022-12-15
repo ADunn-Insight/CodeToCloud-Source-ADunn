@@ -79,11 +79,12 @@ stages:
       steps:
         - powershell: |
             Write-Host "##vso[task.setvariable variable=finalConnection;isOutput=true]$(mongoConnection)"
+            Write-Host "testing before moving on to next step: $(finalConnection)""
           name: makeLocal
         - task: Docker@2
           inputs:
             containerRegistry: 'GitHub Container Registry'
             command: login
         - script: |
-            echo "mongo connection string" + $(makeLocal.finalConnection)
+            echo "mongo connection string $(makeLocal.finalConnection)"
             docker run -e MONGODB_CONNECTION=$(makeLocal.finalConnection) ghcr.io/adunn-insight/fabrikam-init
