@@ -77,6 +77,8 @@ stages:
       variables:
         mongoConnection: $[ dependencies.getConnectionString.outputs['outputString.mongoDBConnection'] ]
       steps:
+        - powershell: |
+            Write-Host "testing in powershell before docker $(mongoConnection)"
         - task: Docker@2
           inputs:
             containerRegistry: 'GitHub Container Registry'
