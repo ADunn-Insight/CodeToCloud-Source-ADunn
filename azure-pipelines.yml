@@ -77,4 +77,4 @@ stages:
           inputs:
             containerregistrytype: 'Azure Container Registry'
             action: Run a Docker command
-            customCommand: docker run -ti -e MONGODB_CONNECTION=$mongoConnection ghcr.io/adunn-insight/fabrikam-init
+            customCommand: docker run -e MONGODB_CONNECTION=$mongoConnection ghcr.io/adunn-insight/fabrikam-init
