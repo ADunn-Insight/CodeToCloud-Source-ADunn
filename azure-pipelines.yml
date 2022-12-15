@@ -55,20 +55,19 @@ stages:
     jobs:
     - job: 'getConnectionString'
       steps:
-        - task: AzurePowerShell@5
+        - task: AzureCLI@2
           inputs:
             azureSubscription: 'Fabrikam-Azure'
-            azurePowerShellVersion: 'LatestVersion'
-            scriptType: 'InlineScript'
-            pwsh: true
-            Inline: |
+            scriptLocation: 'inlineScript'
+            scriptType: pscore
+            inlineScript: |
               $dbKeys = az cosmosdb keys list -n "fabmedical-cdb-add" -g "fabmedical-rg-add" --type connection-strings `
                 --query "connectionStrings[?description=='Primary MongoDB Connection String'].connectionString"
               $manipulate = $dbKeys
               $manipulate = $manipulate.Split("""")[1]
               $manipulate = $manipulate.Split("?")
               $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
-              ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString            
+              ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString           
     - job: 'dockerPopulateDB'
       dependsOn: 'getConnectionString'
       variables:
