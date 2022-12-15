@@ -71,12 +71,11 @@ stages:
           name: configureString
         - powershell: |
             Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$(configureString.dbString)"
-            Write-Host "before moving to next step the dbString $(configureString.dbString)"
           name: outputString
     - job: 'dockerPopulateDB'
       dependsOn: 'getConnectionString'
       variables:
-        mongoConnection: $[ dependencies.getConnectionString.outputs['testing.mongoDBConnection'] ]
+        mongoConnection: $[ dependencies.getConnectionString.outputs['outputString.mongoDBConnection'] ]
       steps:
         - task: Docker@2
           inputs:
