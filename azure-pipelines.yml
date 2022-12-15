@@ -56,7 +56,6 @@ stages:
     - job: 'getConnectionString'
       steps:
         - task: AzureCLI@2
-          name: getString
           inputs:
             azureSubscription: 'Fabrikam-Azure'
             scriptLocation: 'inlineScript'
@@ -68,8 +67,8 @@ stages:
               $manipulate = $manipulate.Split("""")[2]
               $manipulate = $manipulate.Split("?")
               $databaseString = $manipulate[0] + "contentdb?" + $manipulate[1]
-              ##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString
-              Write-Host "mongodbconnection after creation before next job" + $(getString.mongoDBConnection)
+              Write-Host "##vso[task.setvariable variable=mongoDBConnection;isOutput=true]$databaseString"
+              name: getString
     - job: 'dockerPopulateDB'
       dependsOn: 'getConnectionString'
       variables:
