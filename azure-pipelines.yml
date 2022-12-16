@@ -50,7 +50,7 @@ stages:
                   scriptLocation: 'scriptPath'
                   scriptPath: './infrastructure/automate.ps1'
                 env:
-                  CR_PAT: $(NEW_PAT)
+                  CR_PAT: $(CR_PAT)
   - stage: PopulateDB
     dependsOn: DeployProd
     jobs:
